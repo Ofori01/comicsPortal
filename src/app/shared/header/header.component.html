@@ -1,14 +1,83 @@
-<header>
-    <div class="container text-center">
-        <div class="row">
-            <!-- logo  -->
-            <div class="col-8"></div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+    <div class="container">
+        <!-- logo  -->
+        <a class="navbar-brand" [routerLink]="['/']">
+            <img src="assets/light-logo-50.png" alt="Leti Arts" width="30" height="24">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon">
+                <svg version="1.1" class="edgtf-side-area-opener" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="23.922px" height="23.916px"
+                    viewBox="0 0 23.922 23.916" enable-background="new 0 0 23.922 23.916" xml:space="preserve">
+                    <rect x="2.604" y="14.698" transform="matrix(0.7071 0.7071 -0.7071 0.7071 14.9741 2.3277)"
+                        fill="#ffffff" width="4.146" height="9.083"></rect>
+                    <rect x="17.166" y="0.135" transform="matrix(0.7072 0.707 -0.707 0.7072 8.9391 -12.2324)"
+                        fill="#ffffff" width="4.145" height="9.083"></rect>
+                    <rect x="2.61" y="0.141" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 11.3045 4.6818)"
+                        fill="#ffffff" width="4.145" height="9.083"></rect>
+                    <rect x="17.172" y="14.703" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 46.4606 19.2446)"
+                        fill="#ffffff" width="4.146" height="9.083"></rect>
+                </svg>
+            </span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div>
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                    <span class="navbar-toggler-icon">
+                        <svg version="1.1" class="edgtf-side-area-opener" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="23.922px" height="23.916px"
+                    viewBox="0 0 23.922 23.916" enable-background="new 0 0 23.922 23.916" xml:space="preserve">
+                    <rect x="2.604" y="14.698" transform="matrix(0.7071 0.7071 -0.7071 0.7071 14.9741 2.3277)"
+                        fill="#ffffff" width="4.146" height="9.083"></rect>
+                    <rect x="17.166" y="0.135" transform="matrix(0.7072 0.707 -0.707 0.7072 8.9391 -12.2324)"
+                        fill="#ffffff" width="4.145" height="9.083"></rect>
+                    <rect x="2.61" y="0.141" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 11.3045 4.6818)"
+                        fill="#ffffff" width="4.145" height="9.083"></rect>
+                    <rect x="17.172" y="14.703" transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 46.4606 19.2446)"
+                        fill="#ffffff" width="4.146" height="9.083"></rect>
+                </svg>
+                    </span>
+                </button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <!-- add link to comics page -->
+                        <a routerLinkActive="active" routerLink="" >Comics</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <!-- add link to shelf page -->
+                        <a routerLink="" routerLinkActive="active">Shelf</a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Login/Signup
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Login</a></li>
+                          <li>
+                            <hr class="dropdown-divider">
+                          </li>
+                          <li><a class="dropdown-item" href="#">Signup</a></li>
+                        </ul>
+                      </li>
+                </ul>
+                <!-- make search form be displayed when on comics page -->
+
+                <form class="d-flex mt-3" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search For Comics" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
 
 
-            <!-- nav items -->
-            <div class="col-4"></div>
+
+            </div>
+
         </div>
-
     </div>
 
-</header>
+</nav>
