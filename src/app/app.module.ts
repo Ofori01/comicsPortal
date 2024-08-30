@@ -12,7 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [AppComponent],
   imports: [
     CommonModule,
-    RouterOutlet,
     BrowserModule,
     AppRoutingModule,
     SharedModule

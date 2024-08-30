@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { NgxParallaxModule } from '@yoozly/ngx-parallax';
 
 
 
@@ -10,7 +11,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   declarations: [FooterComponent, HeaderComponent],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [FooterComponent, HeaderComponent]
 })

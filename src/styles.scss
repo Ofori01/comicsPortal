@@ -1,4 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+
+// Default variable overrides
+$primary: #f09e06;
+$dark: #000;
+
+$nav-underline-link-active-color: $primary;
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+
