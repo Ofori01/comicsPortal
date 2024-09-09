@@ -5,6 +5,7 @@ import comicsRouter from '../routes/comicsRoutes.mjs';
 import mongoose from 'mongoose';
 import { GridFSBucket } from 'mongodb';
 import multer from 'multer';
+import "../schemas/comicsSchema.mjs"
 
 
 
@@ -17,7 +18,8 @@ app.listen(process.env.PORT, ()=>{ console.log(`Server is running on http://loca
 
 
 //create database connection 
-const db_connection = mongoose.createConnection(process.env.DATABASE_CONNECTION);
+mongoose.connect(process.env.DATABASE_CONNECTION)
+const db_connection = mongoose.connection
 
 //Initialize bucket
 let bucket;

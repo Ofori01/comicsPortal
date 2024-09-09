@@ -2,88 +2,110 @@ import { response, Router } from "express"
 import { bucket } from "../server/index.mjs";
 import {Readable} from 'stream'
 import multer from 'multer'
-import comics from "../schemas/comicsSchema.mjs";
+import {comicsModel} from "../schemas/comicsSchema.mjs";
+import { title } from "process";
+import { request } from "http";
+import { mongo } from "mongoose";
 
 const comicsRouter = Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-comicsRouter.get('/comics', async (request, response)=>{
-    let newComic
+comicsRouter.get('/api/comics', async (request, response)=>{
+    // const comics = comics.find()
+    let allComics;
     try {
-        newComic = new comics({
-            title: "test",
-            description: "Ofori"
-        })
-       const savedComic = await newComic.save()
-       response.send({msg: "comic saved", savedComic})
-
+         allComics = await comicsModel.find()
+        
     } catch (error) {
-        return response.status(401).send({msg: "error saving to db"})
+        console.log('Error Loading comics', error)
         
     }
-    // response.send('Comics route')
 })
 
-//upload files
-comicsRouter.post('/comics/upload', upload.single('file'), async (request, response)=>{
-    // response.send({file: request.file});
-    const {title, description} = request.body;
-    console.log(title,description);
 
+
+
+// Route to upload both an image and a file
+comicsRouter.post('/api/comics/upload', upload.fields([
+    { name: 'file', maxCount: 1 }, // File field (e.g., a PDF or comic file)
+    { name: 'image', maxCount: 1 } // Image field (e.g., a cover image)
+]), async (request, response) => {
+    const { title, description } = request.body;
+    
     if (!title || !description) {
         return response.status(400).send({ error: 'Title and description are required' });
-      }
+    }
 
-    if(!request.file) return response.status(400).send('Please upload a file');
-    const readableFileStream = new Readable();
-    readableFileStream.push(request.file.buffer);
-    readableFileStream.push(null);
+    // Check if both files are provided
+    if (!request.files || !request.files.file || !request.files.image) {
+        return response.status(400).send('Both a file and an image are required');
+    }
 
-    const uploadStream =  bucket.openUploadStream(request.file.originalname, 
-        {
-            chunkSizeBytes: 1048576, // 1MB chunk size
-            metadata: { field: 'uploadDate', value: `${Date.now()}`, }
-        
-    });
+    // Helper function to upload a file to GridFS
+    const uploadToGridFS = (file) => {
+        return new Promise((resolve, reject) => {
+            const readableFileStream = new Readable();
+            readableFileStream.push(file.buffer);
+            readableFileStream.push(null);
+    
+            const uploadStream = bucket.openUploadStream(file.originalname, {
+                chunkSizeBytes: 1048576, // 1MB chunk size
+                metadata: { field: 'uploadDate', value: `${Date.now()}` }
+            });
+    
+            readableFileStream.pipe(uploadStream).on('error', (error) => {
+                reject(error);
+            }).on('finish', () => {
+                resolve(uploadStream.id);
+            });
+        });
+    };
 
-    readableFileStream.pipe(uploadStream).on('error', (error)=>{
-        console.log('Error uploading file', error);
-        response.status(500).send('Error uploading file');
-    }).on('finish', async ()=>{
-        const id = uploadStream.id;
-        console.log('File uploaded to bucket successfully with object id', id);
+    try {
+        // Upload both the file and the image to GridFS
+        const fileId = await uploadToGridFS(request.files.file[0]);
+        const imageId = await uploadToGridFS(request.files.image[0]);
 
-        const newComic = new comics({
-            title : title,
-            description : description,
-            file: id 
-        })
+        // Create a new comic entry in the database
+        const newComic = new comicsModel({
+            title: title,
+            description: description,
+            file: fileId, 
+            image: imageId
+        });
 
-        let savedComic;
-        try {
-            savedComic = await newComic.save();
-            console.log('File uploaded successfully');
-            return  response.status(201).send({savedComic, message: 'File uploaded successfully'});
-            
-        } catch (error) {
-            console.log('Error saving comic to database', error);
-            return response.status(500).send('Error saving comic to database');
-            
-        }
-        
-    })
+        // Save the comic entry to the database
+        const savedComic = await newComic.save();
+        console.log('File and image uploaded successfully');
+        return response.status(201).send({ savedComic, message: 'File and image uploaded successfully' });
 
-})
+    } catch (error) {
+        console.error('Error uploading file and image:', error);
+        return response.status(500).send('Error uploading file and image');
+    }
+});
 
 
 
 //download files
-comicsRouter.get('/comics/download/:comicName', async (request, response)=>{
-    const {comicName} = request.params;
+comicsRouter.get('/api/comics/download/:fileId', async (request, response)=>{
+    const {fileId} = request.params;
 
-    const comic = await comicsSchema.findOne({title: comicName});
+    try {
+        const id= mongo.ObjectId(fileId)
+        const downloadStream = bucket.openDownloadStream(id)
+        downloadStream.on('error', (error) => {
+            console.error('Error downloading file:', error);
+            response.status(500).send('Error downloading file');
+        });
 
+        response.setHeader('Content-Type', 'application/octet-stream');
+        downloadStream.pipe(response);
+    } catch (error) {
+
+        
+    }
 
 
 

@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const comicsSchema = mongoose.Schema({
+const comicsSchema = new mongoose.Schema({
     title: {
         type: mongoose.Schema.Types.String,
         required: true
@@ -15,8 +15,8 @@ const comicsSchema = mongoose.Schema({
     file: {
         type: mongoose.Schema.ObjectId,
     }
-})
+})  
 
-const comics = mongoose.model('comics', comicsSchema);
 
-export default comics
+
+export  const comicsModel = mongoose.model('comics', comicsSchema);
