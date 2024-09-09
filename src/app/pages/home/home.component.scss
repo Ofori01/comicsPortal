@@ -1,27 +1,20 @@
 .parallax {
-  /* The image used */
   background-image: url("/assets/landing-bg.png");
-
-  /* Set a specific height */
   min-height: 800px;
 
   /* Create the parallax scrolling effect */
-  background-attachment:fixed;
+  background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .parallax2 {
-  /* The image used */
   background-image: url("/assets/landing-bg2.png");
-  
-
-  /* Set a specific height */
   min-height: 800px;
 
   /* Create the parallax scrolling effect */
-  background-attachment:fixed;
+  background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -60,7 +53,7 @@
   transform: translate(0, -50%);
 }
 
-.wave-divider{
+.wave-divider {
   background-image: url("/assets/wave-haikei.png");
 
   background-attachment: scroll;
@@ -94,11 +87,13 @@
   fill: #000000;
 }
 
-.landingInfo{
+.landingInfo {
   border: none;
-  border-radius: 50 px;
-  box-shadow: 0 1rem 3rem rgba(#f09e06, .575), 0 1rem 3rem rgba(#adb5bd, .175), 0 1rem 3rem rgba(#000, .175)  ;
+  border-radius: 50px;
+  box-shadow: 0 1rem 3rem rgba(#f09e06, .575), 0 1rem 3rem rgba(#adb5bd, .175), 0 1rem 3rem rgba(#000, .175);
+
 }
+
 
 
 @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap");
@@ -128,11 +123,9 @@ section {
   justify-content: center;
   align-items: center;
   gap: 30px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.28) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.28) 0%,
+      rgba(255, 255, 255, 0) 100%);
   backdrop-filter: blur(30px);
   border-radius: 20px;
   width: min(900px, 100%);
@@ -143,10 +136,10 @@ section {
 
 }
 
-.content:hover{
-  box-shadow: 0 1rem 3rem rgba(#f09e06, .575), 0 1rem 3rem rgba(#adb5bd, .175), 0 1rem 3rem rgba(#000, .175)  ;
+.content:hover {
+  box-shadow: 0 1rem 3rem rgba(#f09e06, .575), 0 1rem 3rem rgba(#adb5bd, .175), 0 1rem 3rem rgba(#000, .175);
 
-  
+
 }
 
 .info {
@@ -165,10 +158,6 @@ section {
   font-size: 1rem;
   margin-bottom: 20px;
   line-height: 1.5;
-}
-
-.movie-night {
-  background: linear-gradient(225deg, #ff3cac 0%, #784ba0 50%, #2b86c5 100%);
 }
 
 .btn {
@@ -196,22 +185,28 @@ section {
 }
 
 @keyframes gelatine {
+
   0%,
   100% {
     transform: scale(1, 1);
   }
+
   25% {
     transform: scale(0.9, 1.1);
   }
+
   50% {
     transform: scale(1.1, 0.9);
   }
+
   75% {
     transform: scale(0.95, 1.05);
   }
 }
 
 /* SWIPER */
+
+
 
 .swiper {
   width: 250px;
@@ -295,12 +290,10 @@ section {
   width: 20px;
   height: 20px;
   background-color: #ff3cac;
-  background-image: linear-gradient(
-    225deg,
-    #ff3cac 0%,
-    #784ba0 50%,
-    #2b86c5 100%
-  );
+  background-image: linear-gradient(225deg,
+      #ff3cac 0%,
+      #784ba0 50%,
+      #2b86c5 100%);
   animation: animate 25s linear infinite;
   bottom: -150px;
 }
@@ -394,14 +387,17 @@ section {
   }
 }
 
-/*
-@media (max-width: 750px) {
-  .content {
-     flex-direction: column-reverse;
-  }
-  
-  .btn {
-    margin: 10px auto 40px;
-  }
+.character-swiper-container{
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+
 }
-*/
+
+.character-swiper-slide > img{
+  width: 40vmin;
+  height: 56vmin;
+  object-fit: cover;
+  object-position: center;
+}
