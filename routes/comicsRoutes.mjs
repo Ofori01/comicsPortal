@@ -3,10 +3,7 @@ import { bucket } from "../server/index.mjs";
 import {Readable} from 'stream'
 import multer from 'multer'
 import {comicsModel} from "../schemas/comicsSchema.mjs";
-import { title } from "process";
-import { request } from "http";
-import { mongo } from "mongoose";
-
+import { ObjectId } from "mongodb";
 const comicsRouter = Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -16,9 +13,11 @@ comicsRouter.get('/api/comics', async (request, response)=>{
     let allComics;
     try {
          allComics = await comicsModel.find()
+         return response.send(allComics)
         
     } catch (error) {
         console.log('Error Loading comics', error)
+        return response.status(500).send({msg: 'Error loading comics'})
         
     }
 })
@@ -93,16 +92,29 @@ comicsRouter.get('/api/comics/download/:fileId', async (request, response)=>{
     const {fileId} = request.params;
 
     try {
-        const id= mongo.ObjectId(fileId)
-        const downloadStream = bucket.openDownloadStream(id)
+        const id = new ObjectId(fileId);
+        console.log(id)
+        const file  = await bucket.find({_id: id}).toArray()
+        console.log(file)
+
+
+        const fileMetadata = file[0];
+        const contentType = fileMetadata.filename.endsWith('.pdf') ? 'application/pdf' : 'application/octet-stream'; // Default to binary if no contentType
+        const filename = fileMetadata.filename || 'downloaded_file'; 
+
+        const downloadStream = bucket.openDownloadStream(id);
+
         downloadStream.on('error', (error) => {
             console.error('Error downloading file:', error);
-            response.status(500).send('Error downloading file');
+            return response.status(500).send('Error downloading file');
         });
 
-        response.setHeader('Content-Type', 'application/octet-stream');
+        // response.setHeader('Content-Type', contentType);
+        // response.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
         downloadStream.pipe(response);
     } catch (error) {
+        console.error('Error retrieving file:', error);
+        response.status(500).send('Error retrieving file');
 
         
     }
