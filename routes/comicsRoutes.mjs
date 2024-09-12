@@ -88,7 +88,7 @@ comicsRouter.post('/api/comics/upload', upload.fields([
 
 
 //download files
-comicsRouter.get('/api/comics/download/:fileId', async (request, response)=>{
+comicsRouter.get('/api/download/:fileId', async (request, response)=>{
     const {fileId} = request.params;
 
     try {
