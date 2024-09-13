@@ -93,9 +93,7 @@ comicsRouter.get('/api/download/:fileId', async (request, response)=>{
 
     try {
         const id = new ObjectId(fileId);
-        console.log(id)
         const file  = await bucket.find({_id: id}).toArray()
-        console.log(file)
 
 
         const fileMetadata = file[0];
