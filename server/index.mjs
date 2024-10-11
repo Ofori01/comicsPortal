@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import { GridFSBucket } from 'mongodb';
 import multer from 'multer';
 import "../schemas/comicsSchema.mjs"
+import loginRoutes from '../routes/loginRoutes.mjs';
 
 
 
@@ -42,3 +43,4 @@ export {bucket}
 
 
 app.use(comicsRouter);
+app.use('/api/auth',loginRoutes)
