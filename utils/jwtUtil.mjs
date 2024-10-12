@@ -12,4 +12,8 @@ function generateToken(user){
     
 }
 
+function verifyToken(token){
+    return jsonwebtoken.verify(token,secret)
+}
+
 export default generateToken

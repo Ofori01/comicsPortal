@@ -5,7 +5,7 @@ async function loginController(req,res){
         const {email, password} = req.body
         const token = await loginService(email,password)
 
-        return res.send(token)
+        return res.send({token})
         
 
 
